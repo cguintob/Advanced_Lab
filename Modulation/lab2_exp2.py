@@ -13,8 +13,7 @@ fontsize = 8
 labelsize = 5
 sp_row = 2
 sp_col = 3
-percent = 0.942
-npercs = 100
+npercs = 1000
 
 def series_ticks(series, n):
     return (max(series.astype(float)) - min(series.astype(float))) / n
@@ -91,10 +90,49 @@ for i in range(sp_row):
 figure2.suptitle("Numerical Differentiation")
 plt.tight_layout()
 
+avg_const = 0
+diff = []
+avgs = []
+perc = []
+
+for k in range(npercs + 1):
+    percent = k / npercs
+    for i in range(sp_row):
+        for j in range(sp_col):
+            df = pd.read_csv(files[(sp_col * i) + j], sep = ",", engine = "python")
+            for l in range(len(df["Vout"]) - 1):
+                derivatives.append((df.at[l + 1, "Vout"] - df.at[l, "Vout"]) / (df.at[l + 1, "Vin"] - df.at[l, "Vin"]))
+            for l in range(1, len(derivatives)):
+                if (np.abs(derivatives[l] - derivatives[l - 1]) > 0.1):
+                    derivatives[l] = derivatives[l - 1]
+            if (derivatives.index(max(derivatives)) - 10 < 0):
+                avg_const = sum(derivatives[0:points]) / points
+            else:
+                avg_const = sum(derivatives[len(derivatives) - (points + 1):len(derivatives) - 1]) / points
+            if ("Diode4" in labels[(sp_col * i) + j].split("_")):
+                thresh_volt = 0.3
+            else:
+                thresh_volt = 0.6
+            if (derivatives[len(derivatives) - 1] - derivatives[0] < 0):
+                thresh_volt *= -1
+            else:
+                thresh_volt *= 1
+            thresh_vout = percent * avg_const
+            close = closest(derivatives, thresh_vout)
+            index = derivatives.index(close)
+            thresh_vin = df["Vin"][:-1][index]
+            diff.append(np.abs(thresh_vin - thresh_volt))
+            derivatives.clear()
+    avgs.append(sum(diff) / len(diff))
+    perc.append(percent)
+    diff.clear()
+
+min_thresh = min(avgs)
+index_thresh = avgs.index(min_thresh)
+perc_thresh = perc[index_thresh]
+
 figure3, axis3 = plt.subplots(sp_row, sp_col)
 avg_const = 0
-threshs = []
-percents = []
 
 for i in range(sp_row):
     for j in range(sp_col):
@@ -109,114 +147,16 @@ for i in range(sp_row):
             avg_const = sum(derivatives[0:points]) / points
         else:
             avg_const = sum(derivatives[len(derivatives) - (points + 1):len(derivatives) - 1]) / points
-        thresh_vout = percent * avg_const
+        thresh_vout = perc_thresh * avg_const
         close = closest(derivatives, thresh_vout)
         index = derivatives.index(close)
         thresh_vin = df["Vin"][:-1][index]
-        print("Threshold Voltage of " + labels[(sp_col * i) + j] + ": " + str(round(thresh_vin, 4)))
+        print("Threshold Voltage of " + labels[(sp_col * i) + j] + ": " + str(thresh_vin) + " V at " + str(round(100 * perc_thresh, 1)) + "%")
         axis3[i, j].axvline(x = thresh_vin)
-        axis3[i, j].axhline(y = percent * avg_const)
+        axis3[i, j].axhline(y = perc_thresh * avg_const)
         derivatives.clear()
 
 figure3.suptitle("Numerical Differentiation: Data Cleaned")
 plt.tight_layout()
 
 plt.show()
-            
-
-
-
-
-
-
-
-'''
-
-
-
-for k in range(npercs):
-thresh_in = df["Vin"][:-1][derivatives.index(closest(derivatives, (k / npercs) * avg_const))]
-new_thresh_in = df["Vin"][:-1][derivatives.index(closest(derivatives, ((k + 1) / npercs) * avg_const))]
-if (np.abs(new_thresh_in) - thresh_volt < np.abs(thresh_in) - thresh_volt):
-min_thresh = np.abs(new_thresh_in)
-min_percent = (k + 1) / npercs
-elif (np.abs(new_thresh_in) - thresh_volt >= np.abs(thresh_in) - thresh_volt):
-min_thresh = np.abs(thresh_in)
-min_percent = k / npercs
-print(thresh_in, new_thresh_in, min_thresh)
-threshs.append(min_thresh)
-percents.append(min_percent)
-
-'''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
-for k in range(npercs + 1):
-percent = k / npercs
-percents.append(percent)
-thresh_vout = percent * max(derivatives)
-close = closest(derivatives, thresh_vout)
-index = derivatives.index(close)
-thresh_vin.append(df["Vin"][:-1][index])
-true_thresh_vin.append(min(thresh_vin))
-'''
-
-
-
-
-'''
-for k in range(1, npercs):
-if (closest_error_upper[k] - 0.6 > closest_error_upper[k - 1] - 0.6):
-true_thresh_upper = closest_error_upper[k - 1]
-else:
-true_thresh_upper = closest_error_upper[k + 1]
-if (closest_error_lower[k] + 0.6 < closest_error_lower[k - 1] + 0.6):
-true_thresh_lower = closest_error
-'''
-
-
-
-'''
-if ("Diode4" in labels[(sp_col * i) + j].split("_")):
-thresh_volt = 0.25
-else:
-thresh_volt = 0.65
-if (derivatives[len(derivatives) - 1] - derivatives[0] < 0):
-thresh_volt *= -1
-else:
-thresh_volt *= 1
-thresh_vin = closest(df["Vin"][:-1], thresh_volt)
-index = list(df["Vin"][:-1]).index(thresh_vin)
-thresh_vout = derivatives[index]
-'''
-
-
-'''
-if (derivatives.index(max(derivatives)) - 10 < 0):
-avg_const = sum(derivatives[0:points]) / points
-for k in range(points):
-sum_squared += (derivatives[k] - avg_const) * (derivatives[k] - avg_const)
-else:
-avg_const = sum(derivatives[len(derivatives) - (points + 1):len(derivatives) - 1]) / points
-for k in range(points):
-sum_squared += (derivatives[len(derivatives) - (k + 1)] - avg_const) * (derivatives[len(derivatives) - (k + 1)] - avg_const)
-variance = sum_squared / (points - 1)
-stdev = np.sqrt(variance)
-sterr = stdev / np.sqrt(points)
-print(str(avg_const) + " +/- " + str(stdev))
-sum_squared = 0
-'''
