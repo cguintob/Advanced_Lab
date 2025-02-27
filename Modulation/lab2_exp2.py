@@ -29,7 +29,7 @@ def closest(ls, K):
 def plotter_raw(axis, i, j, x, y):
     axis[i, j].plot(x, y, colors[(sp_col * i) + j])
     axis[i, j].set_xlabel("Vin", fontsize = fontsize)
-    axis[i, j].set_ylabel("Derivative", fontsize = fontsize)
+    axis[i, j].set_ylabel("Vout", fontsize = fontsize)
     axis[i, j].set_xlim(min(x), max(x))
     axis[i, j].set_ylim(min(y), max(y))
     axis[i, j].set_xticks(np.arange(min(x.astype(float)), max(x.astype(float)) + 1, series_ticks(x, nticks)))
@@ -75,6 +75,8 @@ for i in range(sp_row):
 
 figure1.suptitle("Output vs. Input Voltages for Diodes and Resistor")
 plt.tight_layout()
+plt.savefig("Out_vs_In.png")
+
 
 figure2, axis2 = plt.subplots(sp_row, sp_col)
 derivatives = []
@@ -89,6 +91,7 @@ for i in range(sp_row):
 
 figure2.suptitle("Numerical Differentiation")
 plt.tight_layout()
+plt.savefig("Diff_vs_In.png")
 
 avg_const = 0
 diff = []
@@ -156,7 +159,8 @@ for i in range(sp_row):
         axis3[i, j].axhline(y = perc_thresh * avg_const)
         derivatives.clear()
 
-figure3.suptitle("Numerical Differentiation: Data Cleaned")
+figure3.suptitle("Numerical Differentiation: Thresholds Shown")
 plt.tight_layout()
+plt.savefig("Diff_vs_In_with_Thresholds.png")
 
 plt.show()
