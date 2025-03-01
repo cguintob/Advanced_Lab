@@ -77,7 +77,6 @@ figure1.suptitle("Output vs. Input Voltages for Diodes and Resistor")
 plt.tight_layout()
 plt.savefig("Out_vs_In.png")
 
-
 figure2, axis2 = plt.subplots(sp_row, sp_col)
 derivatives = []
 
