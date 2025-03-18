@@ -1,0 +1,9 @@
+Hello.
+
+This is a test file.
+
+Please delete once you upload something else to this folder.
+
+Thank you.
+
+-- Christian GB
