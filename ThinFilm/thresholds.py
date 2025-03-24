@@ -57,5 +57,6 @@ for f in files:
 
     zero = str(round(-parameters[1], 5))
     print("Expected thickness for conductivity: " + zero + " nm")
-    
+
+plt.tight_layout()
 plt.show()
