@@ -77,7 +77,6 @@ for i in range(len(files)):
         plt.scatter(df["Wavelength"][j], df["Intensity"][j], color = [wavelength_to_rgb(df["Wavelength"][j])])
     plt.xlabel("Wavelength [nm]")
     plt.ylabel("Intensity")
-    plt.xlim([350, 700])
     plt.title(titles[i])
 
 plt.show()
