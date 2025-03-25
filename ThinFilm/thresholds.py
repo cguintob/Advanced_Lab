@@ -43,6 +43,7 @@ for f in files:
     df.reset_index(drop = True, inplace = True)
     
     parameters, covariance = curve_fit(function, df["Offset"], df["Conductivity"], p0 = [200000, -0.05, 0.25])
+    print(parameters)
     fit_x = np.arange(min(df["Offset"]), max(df["Conductivity"]), 0.01)
     fit_y = function(fit_x, *parameters)
     
