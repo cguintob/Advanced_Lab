@@ -21,4 +21,6 @@ Google Doc for Thin-Film Lab: https://docs.google.com/document/d/1oeazH9W1ETTEXZ
 
 Google Doc for Spectroscopy Lab: https://docs.google.com/document/d/1MWxsEZyec2Y7JcDbFDyKyhVDW61EYEeFiBAD2iWvGUA/edit?tab=t.0
 
+Google Doc for Resonance Lab: https://docs.google.com/document/d/1gbOwIFNGqgkzn3KigFNXUXb8C4P8Ucms5zXj1TD5TFg/edit?tab=t.0
+
 
