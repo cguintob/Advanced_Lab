@@ -13,11 +13,11 @@ John Grant, Christian Guinto-Brody, Claire Huchthausen, Quentin Simmons
 ### USEFUL LINKS
 Our Google Drive is located at [this](https://drive.google.com/drive/folders/1UZusCBINWG0TGKUB3hmttuKQa79VOylh?dmr=1&ec=wgc-drive-globalnav-goto) link.
 
-Google Doc for Nuclear Lab: https://docs.google.com/document/d/1C1hKLF5nM2A9VCRs8W_L0Eaz19sM3-sEV__WmxL1uxM/edit?usp=sharing
+Google Doc for Nuclear Lab: https://docs.google.com/document/d/1C1hKLF5nM2A9VCRs8W_L0Eaz19sM3-sEV__WmxL1uxM/edit?tab=t.0  
 
-Google Doc for Modulation Lab: https://docs.google.com/document/d/1BZYPHi3rx3L51KLtuewZ4IPuREUbdUTjqcMKfMXvg2o/edit?usp=sharing
+Google Doc for Modulation Lab: https://docs.google.com/document/d/1BZYPHi3rx3L51KLtuewZ4IPuREUbdUTjqcMKfMXvg2o/edit?tab=t.0  
 
-Google Doc for Thin-Film Lab: https://docs.google.com/document/d/1oeazH9W1ETTEXZ0uHGKZgap2bz59PeD4uhur31SsAFM/edit?tab=t.0
+Google Doc for Thin-Film Lab: https://docs.google.com/document/d/1oeazH9W1ETTEXZ0uHGKZgap2bz59PeD4uhur31SsAFM/edit?tab=t.0  
 
 Google Doc for Spectroscopy Lab: https://docs.google.com/document/d/1MWxsEZyec2Y7JcDbFDyKyhVDW61EYEeFiBAD2iWvGUA/edit?tab=t.0
 
