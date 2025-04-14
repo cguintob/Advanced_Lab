@@ -56,7 +56,8 @@ def wavelength_to_rgb(wavelength, gamma = 0.8):
     B *= 255
     return (R/255, G/255, B/255)
 
-files = []
+
+files= []
 try:
     for i in range(1, len(sys.argv)):
         files.append(sys.argv[i])
@@ -72,11 +73,42 @@ for i in range(len(files)):
 for i in range(len(files)):
     df = pd.read_csv(files[i], sep = "\t", header = None, engine = "python")
     df.columns = ["Wavelength", "Intensity"]
+    # df["Wavelength"] += 23
+    df.drop(df[df["Wavelength"] > 700].index, inplace = True)
     plt.figure()
     for j in range(len(df["Wavelength"])):
-        plt.scatter(df["Wavelength"][j], df["Intensity"][j], color = [wavelength_to_rgb(df["Wavelength"][j])])
+        plt.scatter(df["Wavelength"][j], df["Intensity"][j], color = [wavelength_to_rgb(df["Wavelength"][j])], marker = ".")
     plt.xlabel("Wavelength [nm]")
     plt.ylabel("Intensity")
+    plt.ylim([0, None])
     plt.title(titles[i])
+
+'''
+# Claire iPhone
+
+file1 = "3-25_claire_phone_100_10-6_10-7_350-700.txt"
+file2 = "3-25_claire_phone_100_10-6_10-7_560-700.txt"
+
+df1 = pd.read_csv(file1, sep = "\t", header = None, engine = "python")
+df1.columns = ["Wavelength", "Intensity"]
+df1["Wavelength"] += 23
+df1["Intensity"].loc[df1["Wavelength"] > (560 + 23)] = 0
+# df1["Intensity"].loc[df1["Wavelength"] > 560] = 0
+df1.set_index("Wavelength", inplace = True)
+df2 = pd.read_csv(file2, sep = "\t", header = None, engine = "python")
+df2.columns = ["Wavelength", "Intensity"]
+df2["Wavelength"] += 23
+df2.set_index("Wavelength", inplace = True)
+df3 = df1
+df3["Intensity"].loc[df3.index > (560 + 23)] += df2["Intensity"]
+# df3["Intensity"].loc[df3.index > 560] += df2["Intensity"]
+df3.reset_index(inplace = True)
+for j in range(len(df3["Wavelength"])):
+    plt.scatter(df3["Wavelength"][j], df3["Intensity"][j], color = [wavelength_to_rgb(df3["Wavelength"][j])], marker = ".")
+plt.xlabel("Wavelength [nm]")
+plt.ylabel("Intensity")
+plt.ylim([0, None])
+plt.title("Claire iPhone")
+'''
 
 plt.show()
