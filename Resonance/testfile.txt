@@ -1,1 +1,0 @@
-This is a test file, simply used for pushing the folder to GitHub.
